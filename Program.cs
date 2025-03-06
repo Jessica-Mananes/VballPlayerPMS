@@ -42,7 +42,7 @@ namespace VballPlayerPMS
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("**Invalid**");
+                        Console.WriteLine("**Invalid, Please select only the number that you want to choose.**");
                         break;
                 }
 
@@ -62,7 +62,7 @@ namespace VballPlayerPMS
             Console.Write("Enter age: ");
             int age = Convert.ToInt16(Console.ReadLine());
 
-            Console.Write("Enter player's position (example, (Spiker, Libero, Setter): ");
+            Console.Write("Enter player's position: example-(Spiker, Libero, Setter, etc..): ");
             string position = Console.ReadLine();
 
             players.Add(new PlayerName(name, age, position));
@@ -81,11 +81,11 @@ namespace VballPlayerPMS
             }
 
             ViewProfile();
-            Console.Write("Enter the index of the player to edit: ");
+            Console.Write("Enter the index or number of the player to edit: ");
             int index;
             if (!int.TryParse(Console.ReadLine(), out index) || index < 0 || index >= players.Count)
             {
-                Console.WriteLine("Invalid index!");
+                Console.WriteLine("The number you entered is Invalid!");
                 return;
             }
 
@@ -118,7 +118,7 @@ namespace VballPlayerPMS
 
             for (int i = 0; i < players.Count; i++)
             {
-                Console.WriteLine($"[{i}] Name: {players[i].Name}, Age: {players[i].Age}, Position: {players[i].Position}");
+                Console.WriteLine($"[{i}] Name:{players[i].Name}, Age:{players[i].Age}, Position:{players[i].Position}");
 
             }
 
