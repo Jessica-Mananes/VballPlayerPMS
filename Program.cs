@@ -9,12 +9,13 @@ namespace VballPlayerPMS
         static List<PlayerName> players = new List<PlayerName>();
         static void Main(string[] args)
         {
-            Console.WriteLine("\t-------------------------- Volleyball Player Profile Management System --------------------------");
+            Console.WriteLine("\n\n\t-------------------------- Volleyball Player Profile Management System --------------------------");
 
             while (true)
             {
                 string[] options = { "[1] Create Profile", "[2] Edit Profile", "[3] View Profile", "[4] Delete Profile", "[5] Exit Program" };
-                Console.WriteLine("\nPlease select an option to proceed: ");
+                Console.WriteLine("\nPlease select an option to proceed ");
+                Console.WriteLine(" --------------------------------------------------------------------------------------------------------  ");
 
                 foreach (string option in options)
                 {
@@ -38,41 +39,41 @@ namespace VballPlayerPMS
                         DeleteProfile();
                         break;
                     case 5:
-                        Console.WriteLine("**Exiting**");
+                        Console.WriteLine("\nEXITING THE PROGRAM.");
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("**Invalid, Please select only the number that you want to choose.**");
+                        Console.WriteLine(" **Invalid, Please select only the valid number that you want to choose.** ");
                         break;
                 }
 
-                Console.WriteLine("\n*Press any key to continue*");
+                Console.WriteLine("\n*Press any key to continue* ");
                 Console.ReadKey();
             }
         }
 
         static void CreateProfile()// PARAMETER - CREATE
         {
-            Console.WriteLine("\nYou selected *Create Profile* ");
+            Console.WriteLine("\nYou selected ~ Create Profile ~ ");
 
-            Console.Write("Enter a name: ");
+            Console.Write("Enter a player name: ");
             string name = Console.ReadLine();
 
 
-            Console.Write("Enter age: ");
+            Console.Write("Enter a player age: ");
             int age = Convert.ToInt16(Console.ReadLine());
 
-            Console.Write("Enter player's position: example-(Spiker, Libero, Setter, etc..): ");
+            Console.Write("Enter player's position (Spiker, Libero, Setter, Blocker): ");
             string position = Console.ReadLine();
 
             players.Add(new PlayerName(name, age, position));
-            Console.WriteLine("Player added successfully!\n");
+            Console.WriteLine("\n\t-------------------------- Player added successfully! --------------------------\n");
 
         }
 
         static void EditProfile()// PARAMETER - EDIT
         {
-            Console.WriteLine("\nYou selected *Edit Profile*");
+            Console.WriteLine("\nYou selected ~ Edit Profile ~ ");
 
             if (players.Count == 0)
             {
@@ -82,10 +83,10 @@ namespace VballPlayerPMS
 
             ViewProfile();
             Console.Write("Enter the index or number of the player to edit: ");
-            int index;
-            if (!int.TryParse(Console.ReadLine(), out index) || index < 0 || index >= players.Count)
+            int index = Convert.ToInt16(Console.ReadLine());
+            if (index < 0 || index >= players.Count)
             {
-                Console.WriteLine("The number you entered is Invalid!");
+                Console.WriteLine("The number you entered is invalid!");
                 return;
             }
 
@@ -93,8 +94,8 @@ namespace VballPlayerPMS
             players[index].Name = Console.ReadLine();
 
             Console.Write("Enter new age: ");
-            int newAge;
-            while (!int.TryParse(Console.ReadLine(), out newAge) || newAge <= 0)
+            int newAge = Convert.ToInt16(Console.ReadLine());
+            while ( newAge <= 0)
             {
                 Console.Write("Invalid age. Enter a valid number: ");
             }
@@ -103,13 +104,12 @@ namespace VballPlayerPMS
             Console.Write("Enter new position: ");
             players[index].Position = Console.ReadLine();
 
-            Console.WriteLine("Player's profile updated successfully!\n");
+            Console.WriteLine("\n\t -------------------------- Player's profile updated successfully! --------------------------\n");
         }
 
         static void ViewProfile()//PARAMETER - VIEW
         {
-            Console.WriteLine("\nYou selected *View Profile*");
-
+          
             if (players.Count == 0)
             {
                 Console.WriteLine("No player profiles available.");
@@ -118,7 +118,7 @@ namespace VballPlayerPMS
 
             for (int i = 0; i < players.Count; i++)
             {
-                Console.WriteLine($"[{i}] Name:{players[i].Name}, Age:{players[i].Age}, Position:{players[i].Position}");
+                Console.WriteLine($"[{i}] Name:{players[i].Name} | Age:{players[i].Age} | Position:{players[i].Position}");
 
             }
 
@@ -126,7 +126,7 @@ namespace VballPlayerPMS
 
         static void DeleteProfile()//PARAMETER - DELETE
         {
-            Console.WriteLine("\nYou selected *Delete Profile*");
+            Console.WriteLine("\nYou selected ~ Delete Profile ~ ");
 
             if (players.Count == 0)
             {
@@ -134,19 +134,21 @@ namespace VballPlayerPMS
                 return;
             }
             ViewProfile();
-            Console.Write("Enter the index of the player to delete: ");
-            int index;
-            if (!int.TryParse(Console.ReadLine(), out index) || index < 0 || index >= players.Count)
+            Console.Write("Enter the index or number of the player to delete: ");
+            int index = Convert.ToInt16(Console.ReadLine());
+            if ( index < 0 || index >= players.Count)
             {
                 Console.WriteLine("Invalid index!");
                 return;
             }
 
             players.RemoveAt(index);
-            Console.WriteLine("Player profile deleted successfully!\n");
-        }
-    }
+            Console.WriteLine("\n\t -------------------------- Player profile deleted successfully! --------------------------\n");
 
+        }
+
+    }
+    
     class PlayerName// CLASS
     {
         public string Name { get; set; }
@@ -160,4 +162,4 @@ namespace VballPlayerPMS
             Position = position;
         }
     }
-}
+ }
