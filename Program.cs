@@ -52,7 +52,7 @@ namespace VballPlayerPMS
             }
         }
 
-        static void CreateProfile()// PARAMETER - CREATE
+        static void CreateProfile()// Method for Create Profile
         {
             Console.WriteLine("\nYou selected ~ Create Profile ~ ");
 
@@ -71,7 +71,7 @@ namespace VballPlayerPMS
 
         }
 
-        static void EditProfile()// PARAMETER - EDIT
+        static void EditProfile() // Method for Edit Profile
         {
             Console.WriteLine("\nYou selected ~ Edit Profile ~ ");
 
@@ -107,7 +107,7 @@ namespace VballPlayerPMS
             Console.WriteLine("\n\t -------------------------- Player's profile updated successfully! --------------------------\n");
         }
 
-        static void ViewProfile()//PARAMETER - VIEW
+        static void ViewProfile() // Method for View Profile 
         {
           
             if (players.Count == 0)
@@ -124,7 +124,7 @@ namespace VballPlayerPMS
 
         }
 
-        static void DeleteProfile()//PARAMETER - DELETE
+        static void DeleteProfile() // Method for Delete Profile
         {
             Console.WriteLine("\nYou selected ~ Delete Profile ~ ");
 
