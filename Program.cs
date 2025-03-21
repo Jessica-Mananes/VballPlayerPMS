@@ -37,9 +37,9 @@ namespace VballPlayerPMS
             int choice;
             do
             {
+                Console.WriteLine("\n------------------------------------------------------------------------------------------------");
+                Console.WriteLine("\n------------------------------------------------------------------------------------------------");
                 Console.WriteLine("Please select an option to proceed");
-                Console.WriteLine("\n------------------------------------------------------------------------------------------------");
-                Console.WriteLine("\n------------------------------------------------------------------------------------------------");
 
 
                 foreach (string option in options)
@@ -148,12 +148,12 @@ namespace VballPlayerPMS
                     }
                     else
                     {
-                        Console.WriteLine("\n\t********** ERROR: Age must be a positive number. Please try again. **********");
+                        Console.WriteLine("\n\t********** ERROR: Age must be a positive number. Please try again. **********\n");
                     }
                 }
                 catch (FormatException)
                 {
-                    Console.WriteLine("\n\t********** ERROR: Please enter a valid number for age.**********");
+                    Console.WriteLine("\n\t********** ERROR: Please enter a valid number for age.**********\n");
                 }
 
             }
@@ -172,7 +172,7 @@ namespace VballPlayerPMS
 
             if (players.Count == 0)
             {
-                Console.WriteLine("\n\t********** No player profiles available. **********");
+                Console.WriteLine("\n\t********** No player's profiles available. **********");
                 return;
             }
             Console.WriteLine("\n-------------------------- List of Player's Profiles --------------------------");
@@ -193,21 +193,28 @@ namespace VballPlayerPMS
                 Console.WriteLine("\n\t********** No player's profiles available to delete.********** ");
                 return;
             }
+
             ViewProfile();
 
             int index;
             while (true)
             {
                 Console.Write("\nEnter the index or number of the player to delete: ");
-                index = Convert.ToInt16(Console.ReadLine());
-
-                if (index >= 0 && index < players.Count)
+                try
                 {
-                    break;
+                    index = Convert.ToInt16(Console.ReadLine());
+                    if (index >= 0 && index < players.Count)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n\t********** The number you entered is not on the list! **********");
+                    }
                 }
-                else
+                catch (FormatException)
                 {
-                    Console.WriteLine("\n\t********** The number you entered is not on the list! **********");
+                    Console.WriteLine("\n\t********** ERROR: Please enter a valid number. **********\n");
                 }
             }
 
