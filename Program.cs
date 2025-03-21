@@ -16,30 +16,38 @@ namespace VballPlayerPMS
 
             do
             {
-                Console.WriteLine("Enter username:");
+                Console.Write("Enter username: ");
                 username = Console.ReadLine();
 
-                Console.WriteLine("Enter password: ");
+                Console.Write("Enter password: ");
                 password = Console.ReadLine();
 
                 if (username != adminUsername || password != adminPassword)
                 {
                     Console.WriteLine("Login Error: your password or username is Incorrect. PLease Try again..");
                 }
+                else
+                {
+                    Console.WriteLine("\n-------------------------- Login Successful! --------------------------");
+                }
+
             } while (username != adminUsername || password != adminPassword);
-             
-            while (true)
+
+            string[] options = { "[1] Create Profile", "[2] Edit Profile", "[3] View Profile", "[4] Delete Profile", "[5] Exit Program" };
+            int choice;
+            do
             {
-                string[] options = { "[1] Create Profile", "[2] Edit Profile", "[3] View Profile", "[4] Delete Profile", "[5] Exit Program" };
+                Console.WriteLine("\n--------------------------------------------------------------------------------------------------------------------  ");
                 Console.WriteLine("\nPlease select an option to proceed ");
-                Console.WriteLine(" --------------------------------------------------------------------------------------------------------  ");
+
 
                 foreach (string option in options)
                 {
                     Console.WriteLine(option);
                 }
+
                 Console.Write("\nEnter your choice: ");
-                int choice = Convert.ToInt16(Console.ReadLine());
+                choice = Convert.ToInt16(Console.ReadLine());
 
                 switch (choice)
                 {
@@ -60,13 +68,16 @@ namespace VballPlayerPMS
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine(" **Invalid choice, Please select only the valid number (1-5) that you want to choose.** ");
+                        Console.WriteLine("Invalid input: Please choose only numbers from 1-5. ");
                         break;
                 }
 
-                Console.WriteLine("\n*Press any key to continue* ");
-                Console.ReadKey();
-            }
+                if (choice != 5)
+                {
+                    Console.WriteLine("\n*Press any key to continue* ");
+                    Console.ReadKey();
+                }
+            } while (choice != 5);
         }
 
         static void CreateProfile()// Method for Create Profile
@@ -114,7 +125,7 @@ namespace VballPlayerPMS
 
             Console.Write("Enter new age: ");
             int newAge = Convert.ToInt16(Console.ReadLine());
-            while ( newAge <= 0)
+            while (newAge <= 0)
             {
                 Console.Write("Invalid age. Enter a valid number: ");
             }
@@ -128,7 +139,7 @@ namespace VballPlayerPMS
 
         static void ViewProfile() // Method for View Profile 
         {
-          
+
             if (players.Count == 0)
             {
                 Console.WriteLine("No player profiles available.");
@@ -155,7 +166,7 @@ namespace VballPlayerPMS
             ViewProfile();
             Console.Write("Enter the index or number of the player to delete: ");
             int index = Convert.ToInt16(Console.ReadLine());
-            if ( index < 0 || index >= players.Count)
+            if (index < 0 || index >= players.Count)
             {
                 Console.WriteLine("Invalid index!");
                 return;
@@ -167,7 +178,8 @@ namespace VballPlayerPMS
         }
 
     }
-    
+
+
     class PlayerName// CLASS
     {
         public string Name { get; set; }
@@ -181,4 +193,4 @@ namespace VballPlayerPMS
             Position = position;
         }
     }
- }
+}
