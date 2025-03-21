@@ -91,15 +91,13 @@ namespace VballPlayerPMS
             Console.Write("Enter a player age: ");
             int age = Convert.ToInt16(Console.ReadLine());
 
-            Console.Write("Enter player's position (Spiker, Libero, Setter, Blocker): ");
+            Console.Write("Enter player's position (e.g. Spiker, Libero, Setter: ");
             string position = Console.ReadLine();
 
             players.Add(new PlayerName(name, age, position));
             Console.WriteLine("\n\t-------------------------- Player added successfully! --------------------------\n");
 
         }
-
-
 
         static void EditProfile() // Method for Edit Profile
         {
@@ -112,12 +110,21 @@ namespace VballPlayerPMS
             }
 
             ViewProfile();
-            Console.Write("Enter the index or number of the player to edit: ");
-            int index = Convert.ToInt16(Console.ReadLine());
-            if (index < 0 || index >= players.Count)
+
+            int index;
+            while (true)
             {
-                Console.WriteLine("The number you entered is invalid!");
-                return;
+                Console.Write("Enter the index or number of the player to edit:  ");
+                index = Convert.ToInt16(Console.ReadLine());
+
+                if (index >= 0 && index < players.Count)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("\nThe number you entered is not on the list!");
+                }
             }
 
             Console.Write("Enter new name: ");
@@ -127,7 +134,7 @@ namespace VballPlayerPMS
             int newAge = Convert.ToInt16(Console.ReadLine());
             while (newAge <= 0)
             {
-                Console.Write("Invalid age. Enter a valid number: ");
+                Console.Write("Invalid input. Enter a valid age: ");
             }
             players[index].Age = newAge;
 
