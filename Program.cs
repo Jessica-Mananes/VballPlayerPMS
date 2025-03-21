@@ -91,7 +91,7 @@ namespace VballPlayerPMS
             Console.Write("Enter a player age: ");
             int age = Convert.ToInt16(Console.ReadLine());
 
-            Console.Write("Enter player's position (e.g. Spiker, Libero, Setter: ");
+            Console.Write("Enter player's position (e.g. Spiker, Libero, Setter): ");
             string position = Console.ReadLine();
 
             players.Add(new PlayerName(name, age, position));
@@ -99,7 +99,8 @@ namespace VballPlayerPMS
 
         }
 
-        static void EditProfile() // Method for Edit Profile
+
+        static void EditProfile() // method for Edit Profile
         {
             Console.WriteLine("\nYou selected ~ Edit Profile ~ ");
 
@@ -114,7 +115,7 @@ namespace VballPlayerPMS
             int index;
             while (true)
             {
-                Console.Write("Enter the index or number of the player to edit:  ");
+                Console.Write("Enter the index or number of the player to edit: ");
                 index = Convert.ToInt16(Console.ReadLine());
 
                 if (index >= 0 && index < players.Count)
@@ -135,6 +136,7 @@ namespace VballPlayerPMS
             while (newAge <= 0)
             {
                 Console.Write("Invalid input. Enter a valid age: ");
+                newAge = Convert.ToInt16(Console.ReadLine());
             }
             players[index].Age = newAge;
 
@@ -144,6 +146,7 @@ namespace VballPlayerPMS
             Console.WriteLine("\n\t -------------------------- Player's profile updated successfully! --------------------------\n");
         }
 
+
         static void ViewProfile() // Method for View Profile 
         {
 
@@ -152,10 +155,10 @@ namespace VballPlayerPMS
                 Console.WriteLine("No player profiles available.");
                 return;
             }
-
+            Console.WriteLine("\n--------------------------List of Player Profiles--------------------------");
             for (int i = 0; i < players.Count; i++)
             {
-                Console.WriteLine($"[{i}] Name:{players[i].Name} | Age:{players[i].Age} | Position:{players[i].Position}");
+                               Console.WriteLine($"[{i}] Name:{players[i].Name} | Age:{players[i].Age} | Position:{players[i].Position}");
 
             }
 
@@ -171,13 +174,23 @@ namespace VballPlayerPMS
                 return;
             }
             ViewProfile();
-            Console.Write("Enter the index or number of the player to delete: ");
-            int index = Convert.ToInt16(Console.ReadLine());
-            if (index < 0 || index >= players.Count)
+
+            int index;
+            while (true)
             {
-                Console.WriteLine("Invalid index!");
-                return;
+                Console.Write("\nEnter the index or number of the player to delete: ");
+                index = Convert.ToInt16(Console.ReadLine());
+
+                if (index >= 0 && index < players.Count)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("\nThe number you entered is not on the list!");
+                }
             }
+
 
             players.RemoveAt(index);
             Console.WriteLine("\n\t -------------------------- Player profile deleted successfully! --------------------------\n");
