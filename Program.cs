@@ -10,7 +10,24 @@ namespace VballPlayerPMS
         static void Main(string[] args)
         {
             Console.WriteLine("\n\n\t-------------------------- Volleyball Player Profile Management System --------------------------");
+            string adminUsername = "batakmagvball";
+            string adminPassword = "jessica1124";
+            string username, password;
 
+            do
+            {
+                Console.WriteLine("Enter username:");
+                username = Console.ReadLine();
+
+                Console.WriteLine("Enter password: ");
+                password = Console.ReadLine();
+
+                if (username != adminUsername || password != adminPassword)
+                {
+                    Console.WriteLine("Login Error: your password or username is Incorrect. PLease Try again..");
+                }
+            } while (username != adminUsername || password != adminPassword);
+             
             while (true)
             {
                 string[] options = { "[1] Create Profile", "[2] Edit Profile", "[3] View Profile", "[4] Delete Profile", "[5] Exit Program" };
@@ -43,7 +60,7 @@ namespace VballPlayerPMS
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine(" **Invalid, Please select only the valid number that you want to choose.** ");
+                        Console.WriteLine(" **Invalid choice, Please select only the valid number (1-5) that you want to choose.** ");
                         break;
                 }
 
@@ -70,6 +87,8 @@ namespace VballPlayerPMS
             Console.WriteLine("\n\t-------------------------- Player added successfully! --------------------------\n");
 
         }
+
+
 
         static void EditProfile() // Method for Edit Profile
         {
