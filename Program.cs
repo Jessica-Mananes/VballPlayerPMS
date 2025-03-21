@@ -10,11 +10,11 @@ namespace VballPlayerPMS
         static void Main(string[] args)
         {
             Console.WriteLine("\n\n\t-------------------------- Volleyball Players Profile Management System --------------------------");
-            string adminUsername = "jfm";
+            string adminUsername = "batakmagvball";
             string adminPassword = "jess";
             string username, password;
 
-            do
+            do// DO-WHILE LOOP FOR LOGGING IN
             {
                 Console.Write("\nEnter username: ");
                 username = Console.ReadLine();
@@ -33,8 +33,11 @@ namespace VballPlayerPMS
 
             } while (username != adminUsername || password != adminPassword);
 
+            //OPTIONS
             string[] options = { "[1] Create Profile", "[2] Edit Profile", "[3] View Profile", "[4] Delete Profile", "[5] Exit Program" };
             int choice;
+
+            //DO-WHILE FOR SELECTING OPTIONS, IF OPTION 5 IS NOT SELECTED THE LOOP WILL CONTINUE TO EXECUTE.
             do
             {
                 Console.WriteLine("\n------------------------------------------------------------------------------------------------");
@@ -81,7 +84,8 @@ namespace VballPlayerPMS
             } while (choice != 5);
         }
 
-        static void CreateProfile()// Method for Create Profile
+        //--------------------METHODS---------------------//
+        static void CreateProfile()// METHOD FOR CREATING PROFILES
         {
             Console.WriteLine("\nYou selected >>> CREATE PROFILE <<< ");
 
@@ -101,20 +105,20 @@ namespace VballPlayerPMS
         }
 
 
-        static void EditProfile() // method for Edit Profile
+        static void EditProfile()// METHOD FOR EDITING PROFILES
         {
             Console.WriteLine("\nYou selected >>> EDIT PROFILE <<< ");
 
-            if (players.Count == 0)
+            if (players.Count == 0)//Notice: For empty profiles
             {
                 Console.WriteLine("\n\t********** No player's profiles available to edit. Please create profile first **********");
                 return;
             }
 
-            ViewProfile();
+            ViewProfile();//Calling the View Profile Method
 
             int index;
-            while (true)
+            while (true)//Looping to check for a non-existing index.
             {
                 Console.Write("\nEnter the index or number of the player to edit: ");
                 index = Convert.ToInt16(Console.ReadLine());
@@ -167,7 +171,7 @@ namespace VballPlayerPMS
         }
 
 
-        static void ViewProfile() // Method for View Profile 
+        static void ViewProfile()// METHOD FOR VIEWING PROFILES 
         {
 
             if (players.Count == 0)
@@ -176,7 +180,7 @@ namespace VballPlayerPMS
                 return;
             }
             Console.WriteLine("\n-------------------------- List of Player's Profiles --------------------------");
-            for (int i = 0; i < players.Count; i++)
+            for (int i = 0; i < players.Count; i++)//Increment 
             {
                 Console.WriteLine($"[{i}] Name:{players[i].Name} | Age:{players[i].Age} | Position:{players[i].Position}");
 
@@ -184,7 +188,7 @@ namespace VballPlayerPMS
 
         }
 
-        static void DeleteProfile() // Method for Delete Profile
+        static void DeleteProfile()// METHOD FOR DELETING PROFILES
         {
             Console.WriteLine("\nYou selected >>> DELETE PROFILE <<< ");
 
@@ -194,7 +198,7 @@ namespace VballPlayerPMS
                 return;
             }
 
-            ViewProfile();
+            ViewProfile();//Calling the View Profile Method
 
             int index;
             while (true)
