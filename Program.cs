@@ -97,27 +97,27 @@ namespace VballPlayerPMS
 
             int age;
 
-            while (true) 
+            while (true)
             {
                 Console.Write("Enter a player age: ");
                 string ageInput = Console.ReadLine();
 
                 if (int.TryParse(ageInput, out age) && age > 0)
                 {
-                    break; 
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
                 }
             }
-        
+
 
             Console.Write("Enter player's position (e.g. Spiker, Libero, Setter): ");
             string position = Console.ReadLine();
 
             players.Add(new PlayerName(name, age, position));
-            Console.WriteLine("\n\t-------------------------- Player's ADDED successfully! --------------------------\n");
+            Console.WriteLine("\n\t-------------------------- Player's Profile ADDED successfully! --------------------------\n");
 
         }
 
