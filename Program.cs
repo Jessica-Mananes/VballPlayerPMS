@@ -95,8 +95,23 @@ namespace VballPlayerPMS
             string name = Console.ReadLine();
 
 
-            Console.Write("Enter a player age: ");
-            int age = Convert.ToInt16(Console.ReadLine());
+            int age;
+
+            while (true) 
+            {
+                Console.Write("Enter a player age: ");
+                string ageInput = Console.ReadLine();
+
+                if (int.TryParse(ageInput, out age) && age > 0)
+                {
+                    break; 
+                }
+                else
+                {
+                    Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
+                }
+            }
+        
 
             Console.Write("Enter player's position (e.g. Spiker, Libero, Setter): ");
             string position = Console.ReadLine();
@@ -120,14 +135,14 @@ namespace VballPlayerPMS
             ViewProfile(); //calling View Profile method to show player's list.
 
             int index;
-            while (true) 
+            while (true)
             {
                 Console.Write("\nEnter the index or number of the player to edit: ");
                 string input = Console.ReadLine();
 
                 if (int.TryParse(input, out index) && index >= 0 && index < players.Count)
                 {
-                    break; 
+                    break;
                 }
                 else
                 {
@@ -135,19 +150,19 @@ namespace VballPlayerPMS
                 }
             }
 
-           
+
             Console.Write("\nEnter new name: ");
             players[index].Name = Console.ReadLine();
 
             int newAge;
-            while (true) 
+            while (true)
             {
                 Console.Write("Enter new age: ");
                 string ageInput = Console.ReadLine();
 
                 if (int.TryParse(ageInput, out newAge) && newAge > 0)
                 {
-                    break; 
+                    break;
                 }
                 else
                 {
