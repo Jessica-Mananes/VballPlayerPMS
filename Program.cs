@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace VballPlayerPMS
 {
@@ -84,6 +85,7 @@ namespace VballPlayerPMS
             } while (choice != 5);
         }
 
+
         //--------------------METHODS---------------------//
         static void CreateProfile()// METHOD FOR CREATING PROFILES
         {
@@ -105,61 +107,52 @@ namespace VballPlayerPMS
         }
 
 
-        static void EditProfile()// METHOD FOR EDITING PROFILES
+        static void EditProfile() // METHOD FOR EDITING PROFILES
         {
             Console.WriteLine("\nYou selected >>> EDIT PROFILE <<< ");
 
-            if (players.Count == 0)//Notice: For empty profiles
+            if (players.Count == 0) //NOTICE: for empty profiles.
             {
-                Console.WriteLine("\n\t********** No player's profiles available to edit. Please create profile first **********");
+                Console.WriteLine("\n\t********** No player's profiles available to edit. Please create a profile first. **********");
                 return;
             }
 
-            ViewProfile();//Calling the View Profile Method
+            ViewProfile(); //calling View Profile method to show player's list.
 
             int index;
-            while (true)//Looping to check for a non-existing index.
+            while (true) 
             {
                 Console.Write("\nEnter the index or number of the player to edit: ");
-                index = Convert.ToInt16(Console.ReadLine());
+                string input = Console.ReadLine();
 
-                if (index >= 0 && index < players.Count)
+                if (int.TryParse(input, out index) && index >= 0 && index < players.Count)
                 {
-                    break;
+                    break; 
                 }
                 else
                 {
-                    Console.WriteLine("\n\t********** The number you entered is not on the list! **********");
+                    Console.WriteLine("\n\t********** ERROR: The number you entered is not on the list. Please try again. **********");
                 }
             }
 
+           
             Console.Write("\nEnter new name: ");
             players[index].Name = Console.ReadLine();
 
             int newAge;
-
-            while (true) // check if the input is a positive integer.
+            while (true) 
             {
                 Console.Write("Enter new age: ");
+                string ageInput = Console.ReadLine();
 
-                try
+                if (int.TryParse(ageInput, out newAge) && newAge > 0)
                 {
-                    newAge = Convert.ToInt16(Console.ReadLine());
-
-                    if (newAge > 0)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("\n\t********** ERROR: Age must be a positive number. Please try again. **********\n");
-                    }
+                    break; 
                 }
-                catch (FormatException)
+                else
                 {
-                    Console.WriteLine("\n\t********** ERROR: Please enter a valid number for age.**********\n");
+                    Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
                 }
-
             }
 
             players[index].Age = newAge;
@@ -188,6 +181,7 @@ namespace VballPlayerPMS
 
         }
 
+
         static void DeleteProfile()// METHOD FOR DELETING PROFILES
         {
             Console.WriteLine("\nYou selected >>> DELETE PROFILE <<< ");
@@ -198,7 +192,7 @@ namespace VballPlayerPMS
                 return;
             }
 
-            ViewProfile();//Calling the View Profile Method
+            ViewProfile();//Calling the View Profile Method to show player's list.
 
             int index;
             while (true)
