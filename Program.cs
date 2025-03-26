@@ -131,7 +131,7 @@ namespace VballPlayerPMS
                 }
                 else
                 {
-                    Console.WriteLine("\n\t********** ERROR: The number you entered is not on the list. Please try again. **********");
+                    Console.WriteLine("\n\t********** ERROR: Please try again. Select an existing player's index to edit. **********");
                 }
             }
 
@@ -188,7 +188,7 @@ namespace VballPlayerPMS
 
             if (players.Count == 0)
             {
-                Console.WriteLine("\n\t********** No player's profiles available to delete.********** ");
+                Console.WriteLine("\n\t********** No player's profiles available to delete. ********** ");
                 return;
             }
 
@@ -198,24 +198,17 @@ namespace VballPlayerPMS
             while (true)
             {
                 Console.Write("\nEnter the index or number of the player to delete: ");
-                try
+                string indexInput = Console.ReadLine();
+
+                if (int.TryParse(indexInput, out index) && index >= 0 && index < players.Count)
                 {
-                    index = Convert.ToInt16(Console.ReadLine());
-                    if (index >= 0 && index < players.Count)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("\n\t********** The number you entered is not on the list! **********");
-                    }
+                    break;
                 }
-                catch (FormatException)
+                else
                 {
-                    Console.WriteLine("\n\t********** ERROR: Please enter a valid number. **********\n");
+                    Console.WriteLine("\n\t********** ERROR: Please try again. Select an existing player's index to delete. **********");
                 }
             }
-
 
             players.RemoveAt(index);
             Console.WriteLine("\n\t -------------------------- Player's profile DELETED successfully! --------------------------\n");
