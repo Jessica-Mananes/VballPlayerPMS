@@ -1,49 +1,45 @@
-﻿
-using System;
+﻿using System;
+using VballPMSBusinessDataLogic;
 using System.Collections.Generic;
 
 namespace VballPlayerPMS
 {
     internal class Program
     {
-        static List<PlayerName> players = new List<PlayerName>();
+        static PlayerService playerService = new PlayerService();
+
         static void Main(string[] args)
         {
             Console.WriteLine("\n\n\t-------------------------- Volleyball Players Profile Management System --------------------------");
+
             string adminUsername = "batakmagvball";
             string adminPassword = "jess";
             string username, password;
 
-            do// DO-WHILE LOOP FOR LOGGING IN
+            do
             {
                 Console.Write("\nEnter username: ");
                 username = Console.ReadLine();
-
                 Console.Write("Enter password: ");
                 password = Console.ReadLine();
 
                 if (username != adminUsername || password != adminPassword)
                 {
-                    Console.WriteLine("\n\t********** Login ERROR: your password or username is incorrect. Please try again.. **********");
+                    Console.WriteLine("\n\t********** Login ERROR: Incorrect username or password. Try again. **********");
                 }
                 else
                 {
                     Console.WriteLine("\n\t-------------------------- LOGIN SUCCESSFUL --------------------------");
                 }
-
             } while (username != adminUsername || password != adminPassword);
 
-            //OPTIONS
             string[] options = { "[1] Create Profile", "[2] Edit Profile", "[3] View Profile", "[4] Delete Profile", "[5] Exit Program" };
             int choice;
 
-            //DO-WHILE FOR SELECTING OPTIONS, IF OPTION 5 IS NOT SELECTED THE LOOP WILL CONTINUE TO EXECUTE.
             do
             {
                 Console.WriteLine("\n------------------------------------------------------------------------------------------------");
-                Console.WriteLine("\n------------------------------------------------------------------------------------------------");
-                Console.WriteLine("Please select an option to proceed");
-
+                Console.WriteLine("Please select an option to proceed:");
 
                 foreach (string option in options)
                 {
@@ -84,165 +80,87 @@ namespace VballPlayerPMS
             } while (choice != 5);
         }
 
-
-        //--------------------METHODS---------------------//
-        static void CreateProfile()// METHOD FOR CREATING PROFILES
+        static void CreateProfile()
         {
             Console.WriteLine("\nYou selected >>> CREATE PROFILE <<< ");
 
             Console.Write("Enter a player name: ");
             string name = Console.ReadLine();
 
-
             int age;
-
             while (true)
             {
                 Console.Write("Enter a player age: ");
-                string ageInput = Console.ReadLine();
-
-                if (int.TryParse(ageInput, out age) && age > 0)
-                {
+                if (int.TryParse(Console.ReadLine(), out age) && age > 0)
                     break;
-                }
-                else
-                {
-                    Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
-                }
+                Console.WriteLine("\n\t********** ERROR: Please enter a valid age. **********\n");
             }
 
-
-            Console.Write("Enter player's position (e.g. Spiker, Libero, Setter): ");
+            Console.Write("Enter player's position: ");
             string position = Console.ReadLine();
 
-            players.Add(new PlayerName(name, age, position));
+            playerService.CreateProfile(name, age, position);
             Console.WriteLine("\n\t-------------------------- Player's Profile ADDED successfully! --------------------------\n");
-
         }
 
-
-        static void EditProfile() // METHOD FOR EDITING PROFILES
+        static void EditProfile()
         {
             Console.WriteLine("\nYou selected >>> EDIT PROFILE <<< ");
+            ViewProfile();
 
-            if (players.Count == 0) //NOTICE: for empty profiles.
+            Console.Write("\nEnter the index of the player to edit: ");
+            if (int.TryParse(Console.ReadLine(), out int index))
             {
-                Console.WriteLine("\n\t********** No player's profiles available to edit. Please create a profile first. **********");
-                return;
-            }
+                Console.Write("Enter new name: ");
+                string newName = Console.ReadLine();
 
-            ViewProfile(); //calling View Profile method to show player's list.
-
-            int index;
-            while (true)
-            {
-                Console.Write("\nEnter the index or number of the player to edit: ");
-                string input = Console.ReadLine();
-
-                if (int.TryParse(input, out index) && index >= 0 && index < players.Count)
+                int newAge;
+                while (true)
                 {
-                    break;
+                    Console.Write("Enter new age: ");
+                    if (int.TryParse(Console.ReadLine(), out newAge) && newAge > 0)
+                        break;
+                    Console.WriteLine("\n\t********** ERROR: Enter a valid age. **********\n");
                 }
+
+                Console.Write("Enter new position: ");
+                string newPosition = Console.ReadLine();
+
+                if (playerService.EditProfile(index, newName, newAge, newPosition))
+                    Console.WriteLine("\n\t-------------------------- Player's profile UPDATED successfully! --------------------------\n");
                 else
-                {
-                    Console.WriteLine("\n\t********** ERROR: Please try again. Select an existing player's index to edit. **********");
-                }
+                    Console.WriteLine("\n\t********** ERROR: Invalid index. Profile update failed. **********\n");
             }
-
-
-            Console.Write("\nEnter new name: ");
-            players[index].Name = Console.ReadLine();
-
-            int newAge;
-            while (true)
-            {
-                Console.Write("Enter new age: ");
-                string ageInput = Console.ReadLine();
-
-                if (int.TryParse(ageInput, out newAge) && newAge > 0)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
-                }
-            }
-
-            players[index].Age = newAge;
-
-            Console.Write("Enter new position: ");
-            players[index].Position = Console.ReadLine();
-
-            Console.WriteLine("\n\t -------------------------- Player's profile UPDATED successfully! --------------------------\n");
         }
 
-
-        static void ViewProfile()// METHOD FOR VIEWING PROFILES 
+        static void ViewProfile()
         {
-
+            List<Player> players = playerService.GetAllProfiles();
             if (players.Count == 0)
             {
                 Console.WriteLine("\n\t********** No player's profiles available. **********");
                 return;
             }
             Console.WriteLine("\n-------------------------- List of Player's Profiles --------------------------");
-            for (int i = 0; i < players.Count; i++)//Increment 
+            for (int i = 0; i < players.Count; i++)
             {
                 Console.WriteLine($"[{i}] Name:{players[i].Name} | Age:{players[i].Age} | Position:{players[i].Position}");
-
             }
-
         }
 
-
-        static void DeleteProfile()// METHOD FOR DELETING PROFILES
+        static void DeleteProfile()
         {
             Console.WriteLine("\nYou selected >>> DELETE PROFILE <<< ");
+            ViewProfile();
 
-            if (players.Count == 0)
+            Console.Write("\nEnter the index of the player to delete: ");
+            if (int.TryParse(Console.ReadLine(), out int index))
             {
-                Console.WriteLine("\n\t********** No player's profiles available to delete. ********** ");
-                return;
-            }
-
-            ViewProfile();//Calling the View Profile Method to show player's list.
-
-            int index;
-            while (true)
-            {
-                Console.Write("\nEnter the index or number of the player to delete: ");
-                string indexInput = Console.ReadLine();
-
-                if (int.TryParse(indexInput, out index) && index >= 0 && index < players.Count)
-                {
-                    break;
-                }
+                if (playerService.DeleteProfile(index))
+                    Console.WriteLine("\n\t-------------------------- Player's profile DELETED successfully! --------------------------\n");
                 else
-                {
-                    Console.WriteLine("\n\t********** ERROR: Please try again. Select an existing player's index to delete. **********");
-                }
+                    Console.WriteLine("\n\t********** ERROR: Invalid index. Deletion failed. **********\n");
             }
-
-            players.RemoveAt(index);
-            Console.WriteLine("\n\t -------------------------- Player's profile DELETED successfully! --------------------------\n");
-
-        }
-
-    }
-
-
-    class PlayerName// CLASS
-    {
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public string Position { get; set; }
-
-        public PlayerName(string name, int age, string position)
-        {
-            Name = name;
-            Age = age;
-            Position = position;
         }
     }
 }
