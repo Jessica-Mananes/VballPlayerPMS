@@ -1,60 +1,49 @@
-﻿using System;
+﻿using PMSLogic;
+using System;
 using System.Collections.Generic;
 
-namespace PMSLogic
+namespace PMSDataLogic
 {
     public class PlayerService
     {
-        private readonly List<Player> players = new();
+        private readonly List<Player> playersList = new();
 
-        public void AddPlayer(string name, int age, string position)
+        public bool AddPlayer(string name, int age, string position)
         {
-            players.Add(new Player(name, age, position));
-            Console.WriteLine("\n\t-------------------------- Player's Profile ADDED successfully! --------------------------\n");
+            playersList.Add(new Player(name, age, position));
+            return true;
         }
 
-        public void EditPlayer(int index, string name, int age, string position)
+        public bool EditPlayer(int index, string name, int age, string position)
         {
-            if (index < 0 || index >= players.Count)
-            {
-                Console.WriteLine("\n\t********** ERROR: Invalid index. ****");
-                return;
-            }
+            if (index < 0 || index >= playersList.Count)
+                return false; 
 
-            players[index].Name = name;
-            players[index].Age = age;
-            players[index].Position = position;
-
-            Console.WriteLine("\n\t-------------------------- Player's profile UPDATED successfully! --------------------------\n");
+            playersList[index].Name = name;
+            playersList[index].Age = age;
+            playersList[index].Position = position;
+            return true;
         }
 
-        public void DeletePlayer(int index)
+        public bool DeletePlayer(int index)
         {
-            if (index < 0 || index >= players.Count)
-            {
-                Console.WriteLine("\n\t********** ERROR: Invalid index. ****");
-                return;
-            }
+            if (index < 0 || index >= playersList.Count)
+                return false; 
 
-            players.RemoveAt(index);
-            Console.WriteLine("\n\t-------------------------- Player's profile DELETED successfully! --------------------------\n");
+            playersList.RemoveAt(index);
+            return true;
         }
 
-        public void ViewPlayers()
+        public List<Player> GetAllPlayers()
         {
-            if (players.Count == 0)
-            {
-                Console.WriteLine("\n\t********** No player's profiles available. ****");
-                return;
-            }
-
-            Console.WriteLine("\n-------------------------- List of Player's Profiles --------------------------");
-            for (int i = 0; i < players.Count; i++)
-            {
-                Console.WriteLine($"[{i}] Name: {players[i].Name} | Age: {players[i].Age} | Position: {players[i].Position}");
-            }
+            return new List<Player>(playersList);
         }
 
-        public int GetPlayerCount() => players.Count;
+        public int GetPlayerCount() => playersList.Count;
+
+        public Player GetPlayerByIndex(int index)
+        {
+            return (index >= 0 && index < playersList.Count) ? playersList[index] : null;
+        }
     }
 }

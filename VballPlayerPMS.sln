@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VballPlayerPMS", "VballPlayerPMS.csproj", "{3CA54CF9-37A8-41B0-B82B-427145AF1D2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSDataLogic", "PMSDataLogic\PMSDataLogic.csproj", "{6E197DB5-B2B3-401E-8A8D-95DF94B205AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSLogic", "PMSDataLogic\PMSLogic.csproj", "{6E197DB5-B2B3-401E-8A8D-95DF94B205AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
