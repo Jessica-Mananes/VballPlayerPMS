@@ -1,5 +1,5 @@
 ﻿using System;
-using PMSDataLogic;
+using PMSLogic;
 namespace VballPlayerPMS
 {
     internal class Program
