@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PMSDataLogic
+namespace PMSLogic
 {
     public class PlayerService
     {
