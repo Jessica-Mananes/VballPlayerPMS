@@ -85,28 +85,31 @@ namespace VballPlayerPMS
 
 
         //--------------------METHODS---------------------//
-        static void CreateProfile()// METHOD FOR CREATING PROFILES
+
+        static string GetValidInput(string prompt)// METHOD FOR NO NULL OR EMPTY VALUES
+        {
+            string input;
+            while (true)
+            {
+                Console.Write(prompt);
+                input = Console.ReadLine();
+
+                if (!string.IsNullOrWhiteSpace(input))
+                {
+                    return input;
+                }
+
+                Console.WriteLine("\n\t********** ERROR: Input cannot be empty. Please enter a valid value. **********");
+            }
+        }
+
+        static void CreateProfile()
         {
             Console.WriteLine("\nYou selected >>> CREATE PROFILE <<< ");
 
-            string name;
-            while (true)
-            {
-                Console.Write("Enter a player name: ");
-                name = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    Console.WriteLine("\n\t********** ERROR: Name cannot be empty or null. Please enter a valid name. **********");
-                }
-                else
-                {
-                    break;
-                }
-            }
-
+            string name = GetValidInput("Enter a player name: ");
 
             int age;
-
             while (true)
             {
                 Console.Write("Enter a player age: ");
@@ -116,31 +119,13 @@ namespace VballPlayerPMS
                 {
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
-                }
+                Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
             }
 
-
-            string position;
-            while (true)
-            {
-                Console.Write("Enter player's position (e.g. Spiker, Libero, Setter): ");
-                position = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(position))
-                {
-                    Console.WriteLine("\n\t********** ERROR: Position cannot be empty or null. Please enter a valid position. **********");
-                }
-                else
-                {
-                    break;
-                }
-            }
+            string position = GetValidInput("Enter player's position (e.g. Spiker, Libero, Setter): ");
 
             players.Add(new PlayerName(name, age, position));
             Console.WriteLine("\n\t-------------------------- Player's Profile ADDED successfully! --------------------------\n");
-
         }
 
 
@@ -170,122 +155,97 @@ namespace VballPlayerPMS
                 {
                     Console.WriteLine("\n\t********** ERROR: Please try again. Select an existing player's index to edit. ********");
                 }
-            }
 
 
-            string newName;
-            while (true)
-            {
-                Console.Write("\nEnter new name: ");
-                newName = Console.ReadLine();
+                players[index].Name = GetValidInput("\nEnter new name: ");
 
-                if (!string.IsNullOrWhiteSpace(newName))
-                {
-                    break;
-                }
-                Console.WriteLine("\n\t********** ERROR: Name cannot be empty or null. Please enter a valid name. **********");
-            }
-            players[index].Name = newName; 
-           
-            int newAge;
-            while (true)
-            {
-                Console.Write("Enter new age: ");
-                string ageInput = Console.ReadLine();
-
-                if (int.TryParse(ageInput, out newAge) && newAge > 0)
-                {
-                    break;
-                }
-                Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
-            }
-            players[index].Age = newAge;
-
-
-            string newPosition;
-            while (true)
-            {
-                Console.Write("Enter new position (e.g. Spiker, Libero, Setter): ");
-                newPosition = Console.ReadLine();
-
-                if (!string.IsNullOrWhiteSpace(newPosition))
-                {
-                    break;
-                }
-                Console.WriteLine("\n\t********** ERROR: Position cannot be empty or null. Please enter a valid position. **********");
-            }
-            players[index].Position = newPosition; 
-
-
-            Console.WriteLine("\n\t-------------------------- Player's profile UPDATED successfully! --------------------------\n");
-        }
-
-        static void ViewProfile()// METHOD FOR VIEWING PROFILES 
-            {
-
-                if (players.Count == 0)
-                {
-                    Console.WriteLine("\n\t********** No player's profiles available. ********");
-                    return;
-                }
-                Console.WriteLine("\n-------------------------- List of Player's Profiles --------------------------");
-                for (int i = 0; i < players.Count; i++)//Increment 
-                {
-                    Console.WriteLine($"[{i}] Name:{players[i].Name} | Age:{players[i].Age} | Position:{players[i].Position}");
-
-                }
-
-            }
-        
-
-
-            static void DeleteProfile()// METHOD FOR DELETING PROFILES
-            {
-                Console.WriteLine("\nYou selected >>> DELETE PROFILE <<< ");
-
-                if (players.Count == 0)
-                {
-                    Console.WriteLine("\n\t********** No player's profiles available to delete. ******** ");
-                    return;
-                }
-
-                ViewProfile();//Calling the View Profile Method to show player's list.
-
-                int index;
+                int newAge;
                 while (true)
                 {
-                    Console.Write("\nEnter the index or number of the player to delete: ");
-                    string indexInput = Console.ReadLine();
+                    Console.Write("Enter new age: ");
+                    string ageInput = Console.ReadLine();
 
-                    if (int.TryParse(indexInput, out index) && index >= 0 && index < players.Count)
+                    if (int.TryParse(ageInput, out newAge) && newAge > 0)
                     {
                         break;
                     }
-                    else
-                    {
-                        Console.WriteLine("\n\t********** ERROR: Please try again. Select an existing player's index to delete. ********");
-                    }
+                    Console.WriteLine("\n\t********** ERROR: Please enter a valid positive number for age. **********\n");
                 }
+                players[index].Age = newAge;
 
-                players.RemoveAt(index);
-                Console.WriteLine("\n\t -------------------------- Player's profile DELETED successfully! --------------------------\n");
+                players[index].Position = GetValidInput("Enter new position (e.g. Spiker, Libero, Setter): ");
+
+                Console.WriteLine("\n\t-------------------------- Player's profile UPDATED successfully! --------------------------\n");
+            }
+        }
+
+
+        static void ViewProfile()// METHOD FOR VIEWING PROFILES 
+        {
+
+            if (players.Count == 0)
+            {
+                Console.WriteLine("\n\t********** No player's profiles available. ********");
+                return;
+            }
+            Console.WriteLine("\n-------------------------- List of Player's Profiles --------------------------");
+            for (int i = 0; i < players.Count; i++)//Increment 
+            {
+                Console.WriteLine($"[{i}] Name:{players[i].Name} | Age:{players[i].Age} | Position:{players[i].Position}");
 
             }
 
         }
 
 
-        class PlayerName// CLASS
-        {
-            public string Name { get; set; }
-            public int Age { get; set; }
-            public string Position { get; set; }
 
-            public PlayerName(string name, int age, string position)
+        static void DeleteProfile()// METHOD FOR DELETING PROFILES
+        {
+            Console.WriteLine("\nYou selected >>> DELETE PROFILE <<< ");
+
+            if (players.Count == 0)
             {
-                Name = name;
-                Age = age;
-                Position = position;
+                Console.WriteLine("\n\t********** No player's profiles available to delete. ******** ");
+                return;
             }
+
+            ViewProfile();//Calling the View Profile Method to show player's list.
+
+            int index;
+            while (true)
+            {
+                Console.Write("\nEnter the index or number of the player to delete: ");
+                string indexInput = Console.ReadLine();
+
+                if (int.TryParse(indexInput, out index) && index >= 0 && index < players.Count)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("\n\t********** ERROR: Please try again. Select an existing player's index to delete. ********");
+                }
+            }
+
+            players.RemoveAt(index);
+            Console.WriteLine("\n\t -------------------------- Player's profile DELETED successfully! --------------------------\n");
+
+        }
+
+    }
+
+
+    class PlayerName// CLASS
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Position { get; set; }
+
+        public PlayerName(string name, int age, string position)
+        {
+            Name = name;
+            Age = age;
+            Position = position;
         }
     }
+}
